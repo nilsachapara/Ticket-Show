@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Index</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/uindex.css') }}">
+
+</head>
+
+<body>
+    <header>
+       
+            <p>{{usern}}'s Dashboard</p>
+       
+        <div class="nav">
+            <form class="search" action="{{ url_for('search') }}" method="GET">
+                <div class="search-container">
+                    <input type="search" {% if qq %} value="{{qq}}" {% endif %} id="search" name="q"
+                        placeholder="Search...">
+                    <button type="submit"><i class="fa fa-search"></i>search</button>
+                </div>
+            </form>
+
+            <div>
+                <a href="/profile/{{usern}}">Profile</a> | <a href="/booking/{{usern}}">Bookings</a> | <a
+                    href="/logout/u/{{usern}}">logout</a>
+            </div>
+        </div>
+    </header>
+    <section>
+        <div class="box-container">
+            {% if venue|length == 0 %}
+            <h4>No shows and venues created.</h4>
+            <br>
+            {% else %}
+            {% for i in venue %}
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>{{i.name}} - {{i.place}} , {{i.location}} </h2>
+                </div>
+                {% if i.shows|length == 0 %}
+                <div class="card-content">
+                    <p>Now shows Created.</p>
+                </div>
+                {% else %}
+                <div class="scontent">
+                    {% for j in i.shows|sort(attribute='show_id', reverse=True) %}
+
+                    <div class="card-content">
+                        <p><span>{{j.name}}</span> <span>{{j.timing}}</span> </p>
+                        <div class="tag">
+                            <a href="/book/{{usern}}/{{i.venue_id}}/{{j.show_id}}"><button class="primary-btn">Book
+                                    Now</button></a>
+                        </div>
+
+                    </div>
+
+                    {%endfor%}
+                </div>
+
+                {%endif%}
+
+            </div>
+
+            {%endfor%}
+
+            {%endif%}
+        </div>
+    </section>
+
+</body>
+
+</html>

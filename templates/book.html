@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book show</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/uindex.css') }}">
+</head>
+<body>
+<header>
+    <div>
+        <p>{{usern}}'s Dashboard - booking</p>
+    </div>
+    <div>
+        <a href="/profile/{{usern}}">Profile</a> | <a href="/booking/{{usern}}">Bookings</a> | <a href="/logout/u/{{usern}}">logout</a>
+    </div>
+</header>
+<div class="booki">
+    <div>
+        Booking - <span>{{show.name}} </span><span>{{ve.name}}</span> 
+    </div>
+    <div>
+        Time - {{show.timing}}
+    </div>
+</div>
+<form action="/book/{{usern}}/{{ve.venue_id}}/{{show.show_id}}" method="post">
+    <label for="show-name">Available seats: {{available_tickets}}</label>
+    
+    <label for="number_of_tickets">Number:</label>
+    <input type="text" id="number_of_tiickets" name="number_of_tickets">
+    
+    <label for="price">Price:</label>
+    <input type="text" id="price" value="{{show.ticketprice}}" disabled name="price">
+
+    <label for="total">Total:</label>
+    <input type="text" id="total" name="total" disabled>
+
+    {%if q%}
+        <div class="warning">
+            <p>{{q}}</p>
+        </div>
+        {%endif%}
+    <div class="sub"><input type="submit" value="Confirm booking"></div>
+    
+</form>
+<script>
+    const numberInput = document.getElementById('number_of_tiickets');
+    const priceInput = document.getElementById('price');
+    const totalInput = document.getElementById('total');
+    
+    numberInput.addEventListener('input', updateTotal);
+    priceInput.addEventListener('input', updateTotal);
+    
+    function updateTotal() {
+        const number = parseFloat(numberInput.value) || 0;
+        const price = parseFloat(priceInput.value) || 0;
+        const total = number * price;
+        
+        totalInput.value = total.toFixed(2);
+    }
+</script>
+
+</body>
+</html>

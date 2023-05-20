@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rating</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/uindex.css') }}">
+</head>
+
+<body>
+    <header>
+        <div>
+            <p>{{usern}}'s Dashboard</p>
+        </div>
+        <div>
+            <a href="/profile/{{usern}}">Profile</a> | <a href="/booking/{{usern}}">Bookings</a> | <a href="/logout/u/{{usern}}">logout</a>
+        </div>
+    </header>
+    <form class="ratingform" method="POST" action="/rate/{{u.user_id}}/{{v.name}}/{{s.name}}">
+        <div class="rating-container">
+          <div class="rating-section show-rating-section">
+            <h2>Rate the Show - {{s.name}}</h2>
+            <div class="rating">
+              <label for="show_rating">Rating (1-5):</label>
+              <input type="number" id="show_rating" name="show_rating" min="1" max="5"{%if r %} value="{{r.show_rating}}" {%endif%} required>
+            </div>
+            <div class="comment">
+              <label for="show_comment">Comment:</label>
+              <textarea id="show_comment" name="show_comment" >{%if r %} {{r.show_comment}} {%endif%}</textarea>
+            </div>
+          </div>
+          <div class="rating-section venue-rating-section">
+            <h2>Rate the Venue - {{v.name}}</h2>
+            <div class="rating">
+              <label for="venue_rating">Rating (1-5):</label>
+              <input type="number" id="venue_rating" name="venue_rating" min="1" max="5" {%if r %} value="{{r.venue_rating}}" {%endif%} required>
+            </div>
+            <div class="comment">
+              <label for="venue_comment">Comment:</label>
+              <textarea id="venue_comment" name="venue_comment" > {%if r %} {{r.venue_comment}} {%endif%}</textarea>
+            </div>
+          </div>
+        </div>
+        <div class="sub">
+          <input type="submit" {%if r %} value="Update Review"{%else%} value="Submit Review"{%endif%} >
+        </div>
+      </form>
+      
+</body>
+
+</html>

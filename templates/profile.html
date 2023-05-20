@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/uindex.css') }}">
+</head>
+<body>
+<header>
+    <div>
+        <p>{{user.Username}}'s Profile</p>
+    </div>
+    <div>
+        <a href="/userindex">Home</a> | <a href="/booking/{{user.Username}}">Bookings</a> | <a href="/logout/u/{{user.Username}}">logout</a>
+    </div>
+</header>
+
+<form action="/profile/{{user.Username}}" method="post" class="pf">
+  
+    <label for="user">Username:</label>
+    <input type="text" id="user" name="user" value="{{user.Username}}">
+    {%if q%}
+    <div class="warning"><p>{{q}}</p></div>
+    {%endif%}
+    
+    <label for="pass">Password:</label>
+    <input type="password" id="pass" name="pass" value="{{user.password}}">
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" {% if user.email %}  value="{{user.email}} "{%endif%}>
+
+    <label for="mobile">Mobile:</label>
+    <input type="text" id="mobile" name="mobile" {% if user.mobile %} value="{{user.mobile}}" {%endif%}>
+
+    <div class="sub"><input type="submit" value="Update"></div>
+    
+</form>
+
+</body>
+</html>

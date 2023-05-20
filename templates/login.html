@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Login Page</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+
+<body>
+	<div class="login-box">
+		
+		<form {%if u==  "User" %} action="/Userlogin" {%else%} action="/Adminlogin" {% endif %} method="post"><h2>{{u}} Login</h2>
+			<div class="user-box">
+				<input type="text" name="username" required="">
+				<label>Username</label>
+			</div>
+			<div class="user-box">
+				<input type="password" name="pass" required="">
+				<label>Password</label>
+			</div>
+			{%if q %}
+			<div>
+				<p>{{q}}</p>
+			</div>
+			{% endif %}
+
+			{%if u=="User" %}
+			<div class="us">
+				<input type="submit" name="lo" value="Login">
+				<input type="submit" name="lo" value="Register">
+			</div>
+			{%else%}
+			<div class="ad" >
+				<input type="submit" name="" value="Login">
+			</div>
+
+			{% endif %}
+		</form>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Index</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/aindex.css') }}">
+</head>
+
+<body>
+    <header>
+        <div>
+            <p>{{usern}}'s Dashboard</p>
+        </div>
+        <div>
+            <a href="/summary">Summary</a> | <a href="/logout/a/{{usern}}">logout</a>
+        </div>
+    </header>
+    {% if venue|length == 0 %}
+    <div class="head">
+        <p> No Shows or venues created</p>
+    </div>
+    {% else %}
+    <section>
+        <div class="box-container">
+
+            {% for i in venue %}
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>{{i.name}}</h2>
+                </div>
+                {% if i.shows|length == 0 %}
+                <div class="card-content">
+                    <p>Now shows Created.</p>
+                </div>
+                <div class="card-footer cen">
+                    <a href="/addshow/{{i.name}}"><button class="primary-btn">+</button></a>
+                </div>
+                <div class="card-footer fot" style="padding-top: 9.5rem;">
+                    <a href="/edit/venue/{{i.name}}"><button class="secondary-btn">Edit</button></a>
+                    <a href="/delete/venue/{{i.name}}"><button class="secondary-btn">Delete</button></a>
+                </div>
+                {% else %}
+                <div class="scontent">
+                    {% for j in i.shows %}
+
+                    <div class="card-content">
+                        <div class="cont">
+                            <p>{{j.name}}</p>
+                        
+                            <div class="showedit">
+                                <a href="/edit/{{i.name}}/{{j.name}}"><button class="secondary-btn">Edit</button></a>
+                                <a href="/delete/{{i.name}}/{{j.name}}"><button class="secondary-btn">Delete</button></a>
+                            </div>
+                           
+                        </div>
+
+                        <div class="tag">
+                            <p class="tags">{{j.tags}}</p>
+                        </div>
+
+                    </div>
+
+                    {%endfor%}
+                </div>
+                <div class="card-footer cen">
+                    <a href="/addshow/{{i.name}}"><button class="primary-btn">+</button></a>
+                </div>
+                <div class="card-footer fot">
+                    <a href="/edit/venue/{{i.name}}"><button class="secondary-btn">Edit</button></a>
+                    <a href="/delete/venue/{{i.name}}"><button class="secondary-btn">Delete</button></a>
+                </div>
+
+                {%endif%}
+
+            </div>
+
+            {%endfor%}
+
+            {%endif%}
+            <a class="add" href="/addvenue"><button class="butt">+</button></a>
+        </div>
+    </section>
+</body>
+
+</html>

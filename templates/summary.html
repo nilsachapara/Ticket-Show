@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summary</title>
+    <style>
+      
+    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/aindex.css') }}">
+</head>
+
+<body>
+    <header>
+        <div>
+            <p>{{usern}}'s Dashboard - Summary</p>
+        </div>
+        <div>
+            <a href="/adminindex">Home</a> | <a href="/logout/a/{{usern}}">logout</a>
+        </div>
+    </header>
+<div class="chart">
+  <img src="{{ chart1 }}" alt="Chart of Shows per Venue">
+  <img src="{{ chart2 }}" alt="Chart of Tickets Sold per Show">
+  <img src="{{ chart3 }}" alt="Chart of Revenue per Show">
+</div>
+
+</body>
+
+</html>

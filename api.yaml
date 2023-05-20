@@ -1,0 +1,606 @@
+openapi: 3.0.0
+info:
+  title: Ticket Show API Documentation
+  version: 1.0.0
+  description: |
+    Documentation example. You can add various kinds of **documentation** here. It takes both markdown and HTML.
+    
+servers:
+  - url: http://127.0.0.1:5000/
+# YAML file for API validation
+
+paths:
+  /admin/login:
+    post:
+      tags:
+        - Authentication
+      summary: "Admin login"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: "admin"
+                password:
+                  type: string
+                  example: "password"
+              required:
+                - username
+                - password
+        required: true
+      responses:
+        "200":
+          description: "Login successful."
+        "400":
+          description: "Username and password are required."
+        "401":
+          description: "Invalid username or password."
+  /admin/me:
+    get:
+      tags:
+        - Profile
+      summary: "Get currently logged in admin"
+      responses:
+        "200":
+          description: "Successful operation"
+        "401":
+          description: "Not logged in."
+  /logout:
+    post:
+      tags:
+        - Authentication
+      summary: "Logout"
+      responses:
+        "200":
+          description: "Logged out successfully."
+        "401":
+          description: "Not logged in."
+  /user/register:
+    post:
+      tags:
+        - Authentication
+      summary: "User registration"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: "user1"
+                password:
+                  type: string
+                  example: "password1"
+              required:
+                - username
+                - password
+        required: true
+      responses:
+        "201":
+          description: "User registered successfully."
+        "400":
+          description: "User already exists."
+  /login:
+    post:
+      tags:
+        - Authentication
+      summary: "User login"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: "user1"
+                password:
+                  type: string
+                  example: "password1"
+              required:
+                - username
+                - password
+        required: true
+      responses:
+        "201":
+          description: "User login successful."
+        "401":
+          description: "Invalid credentials."
+  /user/me:
+    get:
+      tags:
+        - Profile
+      summary: "Get user profile"
+      responses:
+        "200":
+          description: "Successful operation"
+        "401":
+          description: "Not logged in."
+        "404":
+          description: "User not found."
+    put:
+      tags:
+        - Profile
+      summary: "Update user profile"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "user1@example.com"
+                mobile:
+                  type: string
+                  example: "1234567890"
+              required:
+                - email
+                - mobile
+        required: true
+      responses:
+        "200":
+          description: "User profile updated."
+        "401":
+          description: "Not logged in."
+        "404":
+          description: "User not found."
+  
+    
+  /venue:
+    post:
+      tags:
+        - Venue
+      summary: Add a new venue
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - place
+                - location
+                - capacity
+              properties:
+                name:
+                  type: string
+                  description: Name of the venue
+                place:
+                  type: string
+                  description: Place of the venue
+                location:
+                  type: string
+                  description: Location of the venue
+                capacity:
+                  type: integer
+                  description: Capacity of the venue
+                  minimum: 1
+      responses:
+        "200":
+          description: Venue added successfully
+        "401":
+          description: Not logged in
+        "500":
+          description: Server error
+  /venue/{venue_id}:
+    get:
+      tags:
+        - Venue
+      summary: Get venue by ID
+      parameters:
+        - name: venue_id
+          in: path
+          required: true
+          description: ID of the venue to get
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        "200":
+          description: Venue data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Name of the venue
+                  place:
+                    type: string
+                    description: Place of the venue
+                  location:
+                    type: string
+                    description: Location of the venue
+                  capacity:
+                    type: integer
+                    description: Capacity of the venue
+        "401":
+          description: Not logged in
+        "404":
+          description: Venue not found
+        "500":
+          description: Server error
+    put:
+      tags:
+        - Venue
+      summary: Update venue by ID
+      parameters:
+        - name: venue_id
+          in: path
+          required: true
+          description: ID of the venue to update
+          schema:
+            type: integer
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - place
+                - location
+                - capacity
+              properties:
+                name:
+                  type: string
+                  description: Name of the venue
+                place:
+                  type: string
+                  description: Place of the venue
+                location:
+                  type: string
+                  description: Location of the venue
+                capacity:
+                  type: integer
+                  description: Capacity of the venue
+                  minimum: 1
+      responses:
+        "200":
+          description: Venue updated successfully
+        "401":
+          description: Not logged in
+        "404":
+          description: Venue not found
+        "500":
+          description: Server error
+    delete:
+      tags:
+        - Venue
+      summary: Delete a venue
+      parameters:
+        - in: path
+          name: venue_id
+          required: true
+          description: ID of the venue to be deleted
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Venue deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Success message
+                    example: Venue deleted successfully.
+        '401':
+          description: Unauthorized
+        '404':
+          description: Venue not found
+  /venues:
+    get:
+      tags:
+        - All venue list
+      summary: Get a list of all venues
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  venues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        venue_id:
+                          type: integer
+                          description: ID of the venue
+                          example: 1
+                        name:
+                          type: string
+                          description: Name of the venue
+                          example: Madison Square Garden
+                        place:
+                          type: string
+                          description: Place of the venue
+                          example: New York City
+                        location:
+                          type: string
+                          description: Location of the venue
+                          example: 4 Pennsylvania Plaza, New York, NY 10001, USA
+                        capacity:
+                          type: integer
+                          description: Capacity of the venue
+                          example: 20000
+                        shows:
+                          type: array
+                          items:
+                            type: string
+                          description: List of shows at the venue
+                          example: ["Foo Fighters", "Adele"]
+        '401':
+          description: Unauthorized
+          
+  /venue/{venue_name}:
+    post:
+      tags:
+        - Show
+      summary: Add a show to a venue
+      description: Endpoint to add a new show to a venue.
+      parameters:
+        - name: venue_name
+          in: path
+          description: Name of the venue.
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: Name of the show.
+          required: true
+          schema:
+            type: string
+        - name: rating
+          in: query
+          description: Rating of the show.
+          required: true
+          schema:
+            type: integer
+        - name: tags
+          in: query
+          description: Tags of the show.
+          required: true
+          schema:
+            type: string
+        - name: timing
+          in: query
+          description: Timing of the show.
+          required: true
+          schema:
+            type: string
+        - name: ticketprice
+          in: query
+          description: Ticket price of the show.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Show added successfully.
+    get:
+      tags:
+        - Show
+      summary: Get all shows of a venue
+      description: Endpoint to get all the shows of a venue.
+      parameters:
+        - name: venue_name
+          in: path
+          description: Name of the venue.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Shows of the venue.
+  /venue/{venue_name}/{show_name}:
+    put:
+      tags:
+        - Show
+      summary: Update a show of a venue
+      description: Endpoint to update a show of a venue.
+      parameters:
+        - name: venue_name
+          in: path
+          description: Name of the venue.
+          required: true
+          schema:
+            type: string
+        - name: show_name
+          in: path
+          description: Name of the show.
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: Name of the show.
+          required: true
+          schema:
+            type: string
+        - name: rating
+          in: query
+          description: Rating of the show.
+          required: true
+          schema:
+            type: integer
+        - name: tags
+          in: query
+          description: Tags of the show.
+          required: true
+          schema:
+            type: string
+        - name: timing
+          in: query
+          description: Timing of the show.
+          required: true
+          schema:
+            type: string
+        - name: ticketprice
+          in: query
+          description: Ticket price of the show.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Show updated successfully.
+    delete:
+      tags:
+        - Show
+      summary: Remove a show from a venue
+      description: Endpoint to remove a show from a venue.
+      parameters:
+        - name: venue_name
+          in: path
+          description: Name of the venue.
+          required: true
+          schema:
+            type: string
+        - name: show_name
+          in: path
+          description: Name of the show.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Show removed from the venue.
+  /book/{venue_name}/{show_name}:
+    post:
+      tags:
+        - Book
+      summary: Book tickets for a show at a venue
+      description: Endpoint to book tickets for a show at a venue.
+      parameters:
+        - name: venue_name
+          in: path
+          description: Name of the venue.
+          required: true
+          schema:
+            type: string
+        - name: show_name
+          in: path
+          description: Name of the show.
+          required: true
+          schema:
+            type: string
+        - name: no_of_tickets
+          in: query
+          description: Number of tickets to be booked.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully booked the tickets
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  status_code:
+                    type: integer
+                    enum: [200]
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  status_code:
+                    type: integer
+                    enum: [400]
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  status_code:
+                    type: integer
+                    enum: [401]
+        '404':
+          description: Venue or show not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  status_code:
+                    type: integer
+                    enum: [404]
+    get:
+      tags:
+        - Book
+      summary: Get the available tickets for a show at a venue
+      description: Endpoint to get the available tickets for a show at a venue.
+      parameters:
+        - name: venue_name
+          in: path
+          description: Name of the venue.
+          required: true
+          schema:
+            type: string
+        - name: show_name
+          in: path
+          description: Name of the show.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Available tickets fetched successfully.
+    
+  /bookings:
+    get:
+      summary: Get the bookings for the logged-in user
+      tags:
+        - bookings
+      responses:
+        '200':
+          description: Successfully retrieved the bookings
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bookings:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ticket_id:
+                          type: integer
+                        show_name:
+                          type: string
+                        venue_name:
+                          type: string
+                        number_of_tickets:
+                          type: integer
+     

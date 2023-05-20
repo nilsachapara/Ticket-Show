@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if s %} Edit venue {%else%} Add venue{%endif%}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/aindex.css') }}">
+</head>
+<body>
+    <header>
+        <div>
+            <p>{{usern}}'s Dashboard</p>
+        </div>
+        <div>
+            <a href="/summary">Summary</a> | <a href="/logout/a/{{usern}}">logout</a>
+        </div>
+    </header>
+
+
+<form class="vf" {% if s %} action="/edit/venue/{{s.name}}" {%else%} action="/addvenue"{%endif%} method="post">
+    <label for="Venue-name">Venue Name:</label>
+    <input type="text" id="Venue-name" name="venuename"required {% if s %} value="{{s.name}}" disabled {%endif%}>
+
+    <label for="Place">Place:</label>
+    <input type="text" id="Place" name="place"required {% if s %} value="{{s.place}}" disabled {%endif%}>
+
+    <label for="Location">Location:</label>
+    <input type="text" id="Location" name="location" required{% if s %} value="{{s.location}}" disabled {%endif%}>
+
+    <label for="Capacity">Capacity:</label>
+    <input type="number" id="Capacity" name="capacity"required {% if s %} value="{{s.capacity}}" {%endif%}>
+    {%if q%}
+    <div class="warning"><p>{{q}}</p></div>
+    {%endif%}
+    <div class="sub"><input type="submit" value="Submit"></div>
+    
+</form>
+</body>
+</html>

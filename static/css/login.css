@@ -1,0 +1,110 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	
+}
+
+body{
+	background: #333;
+	font-family: sans-serif;
+}
+
+.login-box{
+	min-width: 320px;
+	min-height: 350px;
+	background: #000;
+	color: #fff;
+	top: 50%;
+	left: 50%;
+	position: absolute;
+	transform: translate(-50%, -50%);
+	box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+	padding: 20px 30px;
+	border-radius: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.login-box h2{
+	margin: 0;
+	padding: 10px 0 40px 0px;
+	text-align: center;
+	font-size: 22px;
+}
+
+.login-box .user-box{
+	position: relative;
+}
+
+.login-box .user-box input{
+	width: 100%;
+	padding: 10px 0;
+	font-size: 16px;
+	color: #fff;
+	margin-bottom: 30px;
+	border: none;
+	border-bottom: 1px solid #fff;
+	outline: none;
+	background: transparent;
+}
+
+.login-box .user-box label{
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 10px 0;
+	font-size: 16px;
+	color: #fff;
+	pointer-events: none;
+	transition: 0.5s;
+}
+
+
+.login-box .user-box input:focus ~ label,
+.login-box .user-box input:valid ~ label{
+	top: -20px;
+	left: 0;
+	color: #03a9f4;
+	font-size: 12px;
+}
+.us{
+	padding: 20px 10px 0 10px;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+.login-box input[type="submit"]{
+	border: none;
+	outline: none;
+	height: 40px;
+    min-width: 110px;
+	color: #fff;
+	font-size: 18px;
+	background: #03a9f4;
+	cursor: pointer;
+	border-radius: 20px;
+	
+}
+
+.ad{
+	padding: 20px 10px 0 10px;
+}
+
+
+
+.ad input{
+	width: 100%;
+	
+}
+p{
+	color: red;
+	font-size: 13px;
+}
+
+
+.login-box input[type="submit"]:hover{
+	background: #1cb1f5;
+	color: #000;
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookings</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/uindex.css') }}">
+</head>
+<body>
+<header>
+    <div>
+        <p>{{usern}}'s Bookings</p>
+    </div>
+    <div>
+        <a href="/userindex">Home</a> | <a href="/profile/{{usern}}">Profile</a> | <a href="/logout/u/{{usern}}">logout</a>
+    </div>
+</header>
+
+<section>
+    <div class="box-container">
+        {% if tickets|length == 0 %}
+        <h4>No Tickets purchased.</h4>
+        <br>
+        {% else %}
+        
+     
+        <div class="card booking">
+            {% for i in tickets %}
+            <div class="scontent">
+                <div class="card-content">
+                    <p><span style="color: #03a9f4;">Ticket id : {{i[4]}} </span><span> {{i[1]}} </span><span>-</span> <span> {{i[2]}} </span> <span>{{i[3]}}</span></p>
+                    <a href="/rate/{{user.user_id}}/{{i[1]}}/{{i[2]}}"><button class="primary-btn">Rate</button></a>
+                </div>
+            </div>
+            {%endfor%}
+        </div>
+
+        
+        {%endif%}
+    </div>
+</section>
+</body>
+</html>
